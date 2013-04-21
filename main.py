@@ -33,7 +33,7 @@ def spider(rs, host, url, headers, href):
             continue
         line['href'] = host + line['href']
         title = line.string
-        keys = (u'校招', u'应届')
+        keys = (u'校招', u'应届', u'毕业生')
         if filter(lambda x: x in title, keys):
             rs.sadd('urls', line)
 
