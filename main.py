@@ -71,7 +71,7 @@ def main():
 
     for param in params :
         spider(rs, param['host'], param['url'], param['headers'], param['href'])
-    logger.info("end!") 
+    logger.info("end!\n") 
 
 if __name__ == '__main__':
     main()
