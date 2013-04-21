@@ -1,22 +1,66 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+'''
+#=============================================================================
+#     FileName: main.py
+#         Desc: ;:w
+#       Author: lizherui
+#        Email: lzrak47m4a1@gmail.com
+#     HomePage: https://github.com/lizherui
+#      Version: 0.0.1
+#   LastChange: 2013-04-21 17:12:36
+#      History:
+#=============================================================================
+'''
 
-import sys
-import os
+import re
 import requests
+import redis
+from BeautifulSoup import BeautifulSoup
+def spider(rs, host, url, headers, href):
+    r = requests.get(url, headers = headers)
+    frs_soup = BeautifulSoup(r.text)
+    frs_attrs = {
+        'href' : re.compile(href),
+        'title' : None,
+        'target' : None,
+    }
+    frs_res =  frs_soup.findAll('a', frs_attrs)
+    for line in frs_res:
+        if line.parent.parent.get('class') == 'top':
+            continue
+        line['href'] = host + line['href']
+        title = line.string
+        keys = (u'校招', u'应届')
+        if filter(lambda x: x in title, keys):
+            rs.sadd('urls', line)
 
 def main():
-    #url = 'http://bbs.byr.cn/board/Job'
-    url = 'http://bbs.byr.cn/article/JobInfo/89292'
-    headers = {
-        "X-Requested-With" : "XMLHttpRequest",  
-    }
-    payload = {
-        #'p': '1',
-    }
-    r = requests.get(url, headers = headers, params = payload)
-    text = r.text
-    print text
+    rs_host = 'localhost'
+    rs_port = 6379
+    rs = redis.Redis(host=rs_host, port=rs_port)
+    params = (
+        {
+            'host' : 'http://bbs.byr.cn',
+            'url'  : 'http://bbs.byr.cn/board/JobInfo',
+            'headers' : {
+                "X-Requested-With" : "XMLHttpRequest",
+            },
+            'href' : "^/article/JobInfo/\d+$",
+        },
+
+        {
+            'host' : 'http://www.newsmth.net',
+            'url'  : 'http://www.newsmth.net/nForum/board/Career_Campus',
+            'headers' : {
+                "X-Requested-With" : "XMLHttpRequest",
+            },
+            'href' : "^/nForum/article/Career_Campus/\d+$",
+        },
+    )
+
+    for param in params :
+        spider(rs, param['host'], param['url'], param['headers'], param['href'])
 
 if __name__ == '__main__':
     main()
