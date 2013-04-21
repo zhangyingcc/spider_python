@@ -16,7 +16,9 @@
 import re
 import requests
 import redis
+import logging
 from BeautifulSoup import BeautifulSoup
+
 def spider(rs, host, url, headers, href):
     r = requests.get(url, headers = headers)
     frs_soup = BeautifulSoup(r.text)
@@ -36,6 +38,14 @@ def spider(rs, host, url, headers, href):
             rs.sadd('urls', line)
 
 def main():
+    logger=logging.getLogger() 
+    handler=logging.FileHandler("logging.txt")
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') 
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.setLevel(logging.DEBUG)
+    logger.info('start!')
+
     rs_host = 'localhost'
     rs_port = 6379
     rs = redis.Redis(host=rs_host, port=rs_port)
@@ -61,6 +71,7 @@ def main():
 
     for param in params :
         spider(rs, param['host'], param['url'], param['headers'], param['href'])
+    logger.info("end!") 
 
 if __name__ == '__main__':
     main()
