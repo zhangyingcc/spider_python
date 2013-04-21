@@ -39,7 +39,7 @@ def spider(rs, host, url, headers, href):
 
 def main():
     logger=logging.getLogger() 
-    handler=logging.FileHandler("logging.txt")
+    handler=logging.FileHandler("/usr/local/var/log/spider_logging.txt")
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') 
     handler.setFormatter(formatter)
     logger.addHandler(handler)
