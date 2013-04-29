@@ -36,7 +36,6 @@ def spider(rs, host, url, headers, href):
         keys = (u'校招', u'应届', u'毕业生')
         if filter(lambda x: x in title, keys):
             rs.sadd('urls', line)
-    rs.expire('urls', 60 * 60 * 10);
 
 def main():
     logger=logging.getLogger() 
