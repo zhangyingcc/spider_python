@@ -49,6 +49,7 @@ def main():
     rs_host = 'localhost'
     rs_port = 6379
     rs = redis.Redis(host=rs_host, port=rs_port)
+    rs.flushall()
     params = (
         {
             'host' : 'http://bbs.byr.cn',
