@@ -53,7 +53,6 @@ def main():
     rs.incr('times')
     if rs.get('times') >= 10:
         rs.flushall()
-        rs.set('times', 0)
 
     params = (
         {
