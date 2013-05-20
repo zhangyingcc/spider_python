@@ -3,7 +3,7 @@
 '''
 #=============================================================================
 #     FileName: main.py
-#         Desc: ;:w
+#         Desc: 
 #       Author: lizherui
 #        Email: lzrak47m4a1@gmail.com
 #     HomePage: https://github.com/lizherui
