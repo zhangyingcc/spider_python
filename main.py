@@ -49,7 +49,12 @@ def main():
     rs_host = 'localhost'
     rs_port = 6379
     rs = redis.Redis(host=rs_host, port=rs_port)
-    rs.flushall()
+
+    rs.incr('times')
+    if rs.get('times') >= 10:
+        rs.flushall()
+        rs.set('times', 0)
+
     params = (
         {
             'host' : 'http://bbs.byr.cn',
