@@ -51,7 +51,7 @@ def main():
     rs = redis.Redis(host=rs_host, port=rs_port)
 
     rs.incr('times')
-    if rs.get('times') >= 10:
+    if rs.get('times') >= '10':
         rs.flushall()
 
     params = (
