@@ -3,6 +3,8 @@ spider_python
 
 抓取北邮人论坛和水木社区校招信息的爬虫程序, 直接运行main.py即可，非常简洁，可以扩展
 
+程序依赖以下第三方Python包：requests, BeautifulSoup, redis-py
+
 爬虫根据自定义关键字先对校招信息进行过滤，然后存储到本机redis中。本机若有lamp环境，可直接从redis读取信息到web页面上即可，lamp环境中的php程序示例如下：
 
     <!DOCTYPE html>
