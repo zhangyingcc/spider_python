@@ -25,7 +25,7 @@ LOG_LEVEL = logging.DEBUG                                               #日志�
 REDIS_IP = '127.0.0.1'                                                  #Redis的ip
 REDIS_PORT = 6379                                                       #Redis的port
 REDIS_FREQUENCE = 10                                                    #Redis清空的频率
-SPIDER_KEYS = (u'校招', u'应届', u'毕业生')                             #筛选的关键词
+SPIDER_KEYS = (u'校招', u'应届', u'毕业生', 'Google')                   #筛选的关键词
 
 def init_log():
     logger = logging.getLogger() 
